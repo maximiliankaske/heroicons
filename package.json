@@ -27,7 +27,7 @@
     "react/",
     "vue/",
     "outline/",
-    "solid/"
+    "solid/",
     "src/",
     "scripts/",
     "optimized/"
