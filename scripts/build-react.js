@@ -8,7 +8,7 @@ const svgr = require('@svgr/core').default
 console.log(svgr)
 
 function svgToReact(svg, componentName) {
-  return svgr(svg, { typescript: true }, { componentName })
+  return svgr(svg, {}, { componentName })
 }
 
 console.log('Building React components...')
@@ -29,7 +29,7 @@ rimraf('./react/outline/*')
                 return svgToReact(content, `${componentName}Icon`)
               })
               .then((component) => {
-                const fileName = `${componentName}.tsx`
+                const fileName = `${componentName}.jsx`
                 const content = component
                 return fs.writeFile(`./react/solid/${fileName}`, content).then(() => fileName)
               })
@@ -37,14 +37,14 @@ rimraf('./react/outline/*')
         ).then((fileNames) => {
           const exportStatements = fileNames
             .map((fileName) => {
-              const componentName = `${camelcase(fileName.replace(/\.tsx$/, ''), {
+              const componentName = `${camelcase(fileName.replace(/\.jsx$/, ''), {
                 pascalCase: true,
               })}`
               return `export { default as ${componentName} } from './${fileName}'`
             })
             .join('\n')
 
-          return fs.writeFile('./react/solid/index.ts', exportStatements)
+          return fs.writeFile('./react/solid/index.js', exportStatements)
         })
       }),
 
@@ -58,7 +58,7 @@ rimraf('./react/outline/*')
                 return svgToReact(content, `${componentName}Icon`)
               })
               .then((component) => {
-                const fileName = `${componentName}.tsx`
+                const fileName = `${componentName}.jsx`
                 const content = component
                 return fs.writeFile(`./react/outline/${fileName}`, content).then(() => fileName)
               })
@@ -66,14 +66,14 @@ rimraf('./react/outline/*')
         ).then((fileNames) => {
           const exportStatements = fileNames
             .map((fileName) => {
-              const componentName = `${camelcase(fileName.replace(/\.tsx$/, ''), {
+              const componentName = `${camelcase(fileName.replace(/\.jsx$/, ''), {
                 pascalCase: true,
               })}`
               return `export { default as ${componentName} } from './${fileName}'`
             })
             .join('\n')
 
-          return fs.writeFile('./react/outline/index.ts', exportStatements)
+          return fs.writeFile('./react/outline/index.js', exportStatements)
         })
       }),
     ])
