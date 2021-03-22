@@ -1,6 +1,6 @@
 {
-  "name": "heroicons",
-  "version": "0.4.2",
+  "name": "@twigbit/heroicons",
+  "version": "0.4.3",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
@@ -17,7 +17,6 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "postinstall": "npm run build",
     "build": "npm run build-outline && npm run build-solid && npm run build-react && npm run build-vue",
     "build-react": "rm -rf ./react && mkdir ./react && mkdir ./react/solid && mkdir ./react/outline && node ./scripts/build-react.js",
     "build-vue": "rm -rf ./vue && mkdir ./vue && mkdir ./vue/solid && mkdir ./vue/outline && node ./scripts/build-vue.js",
@@ -28,10 +27,7 @@
     "react/",
     "vue/",
     "outline/",
-    "solid/",
-    "src/",
-    "scripts/",
-    "optimized/"
+    "solid/"
   ],
   "peerDependencies": {
     "react": "^17.0.1"
