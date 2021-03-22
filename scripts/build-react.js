@@ -4,6 +4,7 @@ const camelcase = require('camelcase')
 const { promisify } = require('util')
 const rimraf = promisify(require('rimraf'))
 const svgr = require('@svgr/core').default
+const esbuild = require('esbuild')
 
 console.log(svgr)
 
@@ -28,6 +29,12 @@ rimraf('./react/outline/*')
               .then((content) => {
                 return svgToReact(content, `${componentName}Icon`)
               })
+              .then((component) => {
+                return esbuild.transform(component, {
+                  loader: 'jsx'
+                })
+              })
+              .then((transformedComponent) => transformedComponent.code)
               .then((component) => {
                 const fileName = `${componentName}.jsx`
                 const content = component
@@ -69,6 +76,12 @@ rimraf('./react/outline/*')
               .then((content) => {
                 return svgToReact(content, `${componentName}Icon`)
               })
+              .then((component) => {
+                return esbuild.transform(component, {
+                  loader: 'jsx'
+                })
+              })
+              .then((transformedComponent) => transformedComponent.code)
               .then((component) => {
                 const fileName = `${componentName}.jsx`
                 const content = component
