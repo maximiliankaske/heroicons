@@ -44,6 +44,18 @@ rimraf('./react/outline/*')
             })
             .join('\n')
 
+          const typingsHeader = 'type IconProps = Omit<React.SVGProps<SVGSVGElement>, "viewBox" | "fill" | "stroke">\n'
+          const typings = fileNames
+            .map((fileName) => {
+              const componentName = `${camelcase(fileName.replace(/\.jsx$/, ''), {
+                pascalCase: true,
+              })}`
+              return `export function ${componentName}(props: IconProps): JSX.Element`
+            })
+            .join('\n')
+
+          fs.writeFile('./react/solid/index.d.ts', typingsHeader + typings)
+
           return fs.writeFile('./react/solid/index.js', exportStatements)
         })
       }),
@@ -72,6 +84,18 @@ rimraf('./react/outline/*')
               return `export { default as ${componentName} } from './${fileName}'`
             })
             .join('\n')
+
+          const typingsHeader = 'type IconProps = Omit<React.SVGProps<SVGSVGElement>, "viewBox" | "fill" | "stroke">\n'
+          const typings = fileNames
+            .map((fileName) => {
+              const componentName = `${camelcase(fileName.replace(/\.jsx$/, ''), {
+                pascalCase: true,
+              })}`
+              return `export function ${componentName}(props: IconProps): JSX.Element`
+            })
+            .join('\n')
+
+          fs.writeFile('./react/outline/index.d.ts', typingsHeader + typings)
 
           return fs.writeFile('./react/outline/index.js', exportStatements)
         })
