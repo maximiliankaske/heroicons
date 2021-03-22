@@ -31,7 +31,9 @@ rimraf('./react/outline/*')
               })
               .then((component) => {
                 return esbuild.transform(component, {
-                  loader: 'jsx'
+                  loader: 'jsx',
+                  target: 'es5',
+                  format: 'cjs',
                 })
               })
               .then((transformedComponent) => transformedComponent.code)
@@ -61,8 +63,14 @@ rimraf('./react/outline/*')
             })
             .join('\n')
 
-          fs.writeFile('./react/solid/index.d.ts', typingsHeader + typings)
-
+          return fs.writeFile('./react/solid/index.d.ts', typingsHeader + typings).then(() => exportStatements)
+        }).then((exportStatements) => {
+          return esbuild.transform(exportStatements, {
+            target: 'es5',
+            format: 'cjs',
+          })
+        }).then((transformedIndex) => transformedIndex.code)
+        .then((exportStatements) => {
           return fs.writeFile('./react/solid/index.js', exportStatements)
         })
       }),
@@ -78,7 +86,9 @@ rimraf('./react/outline/*')
               })
               .then((component) => {
                 return esbuild.transform(component, {
-                  loader: 'jsx'
+                  loader: 'jsx',
+                  target: 'es5',
+                  format: 'cjs',
                 })
               })
               .then((transformedComponent) => transformedComponent.code)
@@ -108,8 +118,14 @@ rimraf('./react/outline/*')
             })
             .join('\n')
 
-          fs.writeFile('./react/outline/index.d.ts', typingsHeader + typings)
-
+          return fs.writeFile('./react/outline/index.d.ts', typingsHeader + typings).then(() => exportStatements)
+        }).then((exportStatements) => {
+          return esbuild.transform(exportStatements, {
+            target: 'es5',
+            format: 'cjs',
+          })
+        }).then((transformedIndex) => transformedIndex.code)
+        .then((exportStatements) => {
           return fs.writeFile('./react/outline/index.js', exportStatements)
         })
       }),
