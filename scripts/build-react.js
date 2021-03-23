@@ -42,6 +42,14 @@ rimraf('./react/outline/*')
                 const content = component
                 return fs.writeFile(`./react/solid/${fileName}`, content).then(() => fileName)
               })
+              .then((fileNameJSX) => {
+                const fileName = `${componentName}.d.ts`
+                const content = 
+                    `type IconProps = Omit<React.SVGProps<SVGSVGElement>, "viewBox" | "fill" | "stroke">\n`
+                  + `declare function ${componentName}Icon(props: IconProps): JSX.Element;\n`
+                  + `export default ${componentName}Icon;\n`
+                return fs.writeFile(`./react/solid/${fileName}`, content).then(() => fileNameJSX)
+              })
           })
         ).then((fileNames) => {
           const exportStatements = fileNames
@@ -96,6 +104,14 @@ rimraf('./react/outline/*')
                 const fileName = `${componentName}.jsx`
                 const content = component
                 return fs.writeFile(`./react/outline/${fileName}`, content).then(() => fileName)
+              })
+              .then((fileNameJSX) => {
+                const fileName = `${componentName}.d.ts`
+                const content = 
+                    `type IconProps = Omit<React.SVGProps<SVGSVGElement>, "viewBox" | "fill" | "stroke">\n`
+                  + `declare function ${componentName}Icon(props: IconProps): JSX.Element;\n`
+                  + `export default ${componentName}Icon;\n`
+                return fs.writeFile(`./react/outline/${fileName}`, content).then(() => fileNameJSX)
               })
           })
         ).then((fileNames) => {
